@@ -1,0 +1,38 @@
+.navbar{
+    height: fit-content;
+    background-color: #003580;
+    width: 100%;
+    max-width: 2400px;
+    display: flex;
+    justify-content: center;
+}
+.navContainer{
+    width: 100%;
+    max-width: 1400px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.logo{
+    font-weight: 500;
+
+}
+.navButton{
+    margin-left: 20px;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+    color: #003580;;
+}
+
+@media screen and(max-width:300px){
+    .navItems{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
