@@ -151,6 +151,10 @@ cursor: pointer;
     background-color: black;
     color: white;
 }
+.modal{
+    position: absolute;
+    z-index: 100000;
+}
 @media screen and (max-width:900px){
 .hotelImages{
 display: grid;

@@ -1,0 +1,36 @@
+.alert-container{
+    display: flex;
+    flex-direction: row;
+   
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 10px;
+   margin-bottom: 5px;
+   justify-content: space-between;
+}
+.warning{
+    border: 2px solid yellow;
+    border-radius: 20%;
+    
+}
+.alert{
+display: flex;
+gap: 10px;
+font-size: large;
+}
+.btn{
+    background: transparent;
+    border: 1px solid red;
+    position: relative;
+    top: -9px;
+    right: -10px;
+    cursor: pointer;
+    border-radius: 45%;
+}
+
+@media screen and (max-width:650px) {
+    .alert-container{
+        position: relative;
+        top: 60vh;
+    }
+}

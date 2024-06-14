@@ -56,17 +56,56 @@ border-radius: 7px;
 .lsOption{
     padding: 10px;
 }
+.lsOptionItemPType{
+    display: flex;
+    flex-direction: column;
+}
 
 .lsOptionItem{
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
     margin-top: 9px;
-    color: #12111155;
+    color: #00000055;
     font-size: 12px;
+    font: bold;
 }
+
 .lsOptionInput{
-    width: 50px;
+    width: 70px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.pTypeBtn{
+    width: 80px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 1px dashed;
+    border-radius: 8px ;
+}
+.pTypeList{
+    display:grid;
+    grid-template-columns: 100px 100px 100px;
+   
+   
+
+}
+.pTypeItem{
+    display: flex;
+    flex-direction: row;
+   width: fit-content;
+    border: 2px solid rgb(64, 171, 217);
+    border-radius: 8px ;
+    margin: 2px 2px;
+    cursor: pointer;
+}
+.pTypeItemRemove{
+    cursor: pointer;
+}
+.pTypeItemRemove:hover{
+    scale: 1.1;
 }
 .listSearch>button{
     padding: 10px;

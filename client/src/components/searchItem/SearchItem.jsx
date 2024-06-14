@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import "./SearchItem.css";
-import { Link, useActionData } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Alert from "../alert/Alert.jsx";
 
-
-export default function SearchItem({ item, mobileView }) {
+export default function SearchItem({ item, mobileView,dates }) {
   const [noMore, setNoMore] = useState(true);
-  
+  const [alert,setAlert]=useState(false);
+  const navigate=useNavigate();
+
+  const next=()=>{
+  console.log(dates);
+   if(dates[0].startDate!==dates[0].endDate){
+    navigate(`/hotels/${item._id}`);
+   }
+   else{
+ setAlert(true);
+   }
+  }
   return (
-    <div className="searchItem">
+    <div className="container">
+      {alert && <div>
+         <Alert alert={alert} setAlert={setAlert} type="warning" msg="Please select dates before selecting the hotel." />
+        </div>
+      }
+      <div className='searchItem'>
       <img
         src={item.photos[0] ? item.photos[0] : "https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"}
         alt=""
@@ -46,10 +62,12 @@ export default function SearchItem({ item, mobileView }) {
         <div className="siDetailTexts">
           <span className="siPrice">${item.cheapestPrice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
-          <Link to={`/hotels/${item._id}`}>
-            <button className="siCheckButton">See availability</button>
-          </Link>
+          {
+        
+            <button className="siCheckButton" onClick={next}>See availability</button>
+        }
         </div>
+      </div>
       </div>
     </div>
   )
