@@ -57,11 +57,11 @@ export default function Reserve(props) {
   const handleClick = async () => {
     reFetch();
     try {
-      // await Promise.all(selectedRooms.map((roomId) => {
-      //   const res = axios.put(`/rooms/availability/${roomId}`, { dates: allDates })
-      //   return res.data;
+       await Promise.all(selectedRooms.map((roomId) => {
+         const res = axios.put(`/rooms/availability/${roomId}`, { dates: allDates })
+        return res.data;
 
-      // }))
+       }))
       checkoutHandler(props.data.title,props.days * options.room *props.data.cheapestPrice);;
       
     } catch (err) {

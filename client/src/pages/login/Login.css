@@ -71,7 +71,7 @@ cursor: pointer;
     background-color: rgb(58, 58, 58);
 }
 .error{
-    background:linear-gradient(to bottom,red,transparent);
+    background:linear-gradient(to bottom,rgb(232, 139, 139),transparent);
     display: flex;
    
     width: 100%;
