@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./FeaturedProperties.css"
 import useFetch from '../../hooks/useFetch';
+import { useSearchParams } from 'react-router-dom';
 
 export default function FeaturedProperties() {
 
   const { data, loading, error } = useFetch("/hotels?featured=true");
  console.log(data);
- const newData=data.filter((item,i)=>{
-  return i<6;
- })
+ const [newData,setNewData]=useState([]);
+ 
+ useEffect(()=>{
+  const filteredData=data.filter((item,i)=>{
+    return i<6;
+   })
+   setNewData(filteredData);
+ },[loading])
+ 
   return (
     <div className='fp'>
       {loading ? "loading" :

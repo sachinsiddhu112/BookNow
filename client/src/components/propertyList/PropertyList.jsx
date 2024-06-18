@@ -46,7 +46,7 @@ export default function PropertyList() {
     }
   },[loading])
   
-  console.log(data);
+  
  
   return (
     <div className='pList'>
