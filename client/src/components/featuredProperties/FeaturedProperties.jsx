@@ -6,12 +6,12 @@ import { useSearchParams } from 'react-router-dom';
 export default function FeaturedProperties() {
 
   const { data, loading, error } = useFetch("/hotels?featured=true&limit=6");
- console.log(data);
+ console.log("featProp:",data);
  
  
   return (
     <div className='fp'>
-      { data.length==0||loading==true ? "loading" :
+      { data.length===0 ? "loading" :
      
         (
           <>

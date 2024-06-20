@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "./PropertyList.css"
 export default function PropertyList() {
   const { data, loading, error } = useFetch("/hotels/countByType");
-  const navigate=useNavigate();
+  
 
   //We made Images array of object because data[i].count and type is showing undefinde in <h1> && <h2> tags this is because we were using map on two arrays and map accessed only the first array in syntax data && images.map(()=>{})
   //  so we have to some how get counts of particular type of property.Therefore we made images array with extra properties (count and type) show that we can directly access both images and count and type
@@ -40,16 +40,10 @@ export default function PropertyList() {
   }
   ]
   //to set the values of count of each type in images array we used for loop because if data is empty then this loop will not execute and all counts remain 0
-  useEffect(()=>{   
-    for(let i=0;i<data.length;i++){
-      images[i].count=data[i].count;
-    }   
-  },[data])
-  
- 
+ console.log("prop:",data);
   return (
     <div className='pList'>
-      { data.length==0 || loading==true ?"loading":(
+      { data.length===0 ?"loading":(
         <>
        {images.map((element,i)=>( <div className="pListItem" key={i} >
           <img
@@ -61,7 +55,7 @@ export default function PropertyList() {
             
           <h1>{element.type}</h1>
             
-            <h2> {data[i].count} {element.type}</h2>
+            <h2> {data[i].count||0} {element.type}</h2>
           </div>
         </div>
        ))
