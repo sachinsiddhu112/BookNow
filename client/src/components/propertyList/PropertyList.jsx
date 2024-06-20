@@ -39,11 +39,11 @@ export default function PropertyList() {
   
   }
   ]
-  //to set the values of count of each type in images array we used for loop because if data is empty then this loop will not execute and all counts remain 0
- console.log("prop:",data);
+  
+ 
   return (
     <div className='pList'>
-      { data.length===0 ?"loading":(
+      { data.length===0  ?"loading":(
         <>
        {images.map((element,i)=>( <div className="pListItem" key={i} >
           <img
