@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
@@ -40,12 +40,11 @@ export default function PropertyList() {
   }
   ]
   //to set the values of count of each type in images array we used for loop because if data is empty then this loop will not execute and all counts remain 0
-  useEffect(()=>{
+  useMemo(()=>{   
     for(let i=0;i<data.length;i++){
       images[i].count=data[i].count;
-    }
-  },[loading])
-  
+    }   
+  },[loading,data])
   
  
   return (
