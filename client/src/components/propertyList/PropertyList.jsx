@@ -44,7 +44,7 @@ export default function PropertyList() {
     for(let i=0;i<data.length;i++){
       images[i].count=data[i].count;
     }   
-  },[loading,data])
+  },[data])
   
  
   return (
