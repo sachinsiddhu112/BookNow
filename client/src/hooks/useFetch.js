@@ -12,7 +12,7 @@ const useFetch=(url)=>{
         try{
         const res=await axios.get(url);
         setData(res.data);
-         console.log("useFetch",Array.isArray(res.data)?res.data:"Not Array")
+         console.log("useFetch",Array.isArray(res.data)?res.data:("Not Array",res.data))
         
         
         }
