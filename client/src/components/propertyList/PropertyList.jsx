@@ -40,7 +40,7 @@ export default function PropertyList() {
   }
   ]
   //to set the values of count of each type in images array we used for loop because if data is empty then this loop will not execute and all counts remain 0
-  useMemo(()=>{   
+  useEffect(()=>{   
     for(let i=0;i<data.length;i++){
       images[i].count=data[i].count;
     }   
@@ -49,7 +49,7 @@ export default function PropertyList() {
  
   return (
     <div className='pList'>
-      {loading?"loading":(
+      { data.length==0 || loading==true ?"loading":(
         <>
        {images.map((element,i)=>( <div className="pListItem" key={i} >
           <img
@@ -61,7 +61,7 @@ export default function PropertyList() {
             
           <h1>{element.type}</h1>
             
-            <h2> {element.count} {element.type}</h2>
+            <h2> {data[i].count} {element.type}</h2>
           </div>
         </div>
        ))

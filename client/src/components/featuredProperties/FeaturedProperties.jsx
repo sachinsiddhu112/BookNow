@@ -11,7 +11,7 @@ export default function FeaturedProperties() {
  
   return (
     <div className='fp'>
-      {loading ? "loading" :
+      { data.length==0||loading==true ? "loading" :
      
         (
           <>
