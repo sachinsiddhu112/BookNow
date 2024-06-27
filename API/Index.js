@@ -27,7 +27,10 @@ mongoose.connection.on("connected",()=>{
 })
 
 //middlewares
-app.use(cors());
+app.use(cors({
+    origin: 'https://book-now-lake.vercel.app/', 
+    credentials: true 
+  }));
 app.use(cookieParser());
 app.use(express.json());
 
