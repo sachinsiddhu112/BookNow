@@ -21,7 +21,7 @@ export default function Hotel() {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [noMore, setNoMore] = useState(false);
-  const { data, loading, error } = useFetch(`/hotels/find/${id}`)
+  const { data, loading, error } = useFetch(`https://booknow-6odc.onrender.com/api/hotels/find/${id}`)
 
   const [freeRooms,setFreeRooms] = useState(0);
 
@@ -94,7 +94,7 @@ console.log(dates)
 
     try {
 
-      const res = await axios.get(`/hotels/room/${id}`)
+      const res = await axios.get(`https://booknow-6odc.onrender.com/api/hotels/room/${id}`)
 
       return res.data;
 

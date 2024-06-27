@@ -2,7 +2,7 @@ import React from 'react'
 import "./Featured.css";
 import useFetch from '../../hooks/useFetch';
 export default function Featured() {
-    const { data, loading, error, reFetch } = useFetch("/hotels/countByCity?cities=mumbai,delhi,goa");
+    const { data, loading, error, reFetch } = useFetch("https://booknow-6odc.onrender.com/api/hotels/countByCity?cities=mumbai,delhi,goa");
 
     return (
         <div className='featured'>

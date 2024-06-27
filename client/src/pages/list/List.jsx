@@ -44,7 +44,7 @@ export default function List() {
   const [options, setOptions] = useState(location.state ? location.state.options : { adult: 1, children: 0, room: 1 });
 
   //fetching data from api
-  const { data, loading, error, reFetch } = useFetch(`/hotels?city=${destination}&min=${min || 0}&max=${max || 1000000}`)
+  const { data, loading, error, reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels?city=${destination}&min=${min || 0}&max=${max || 1000000}`)
 
 
   const [mobileView, setMobileView] = useState(false);

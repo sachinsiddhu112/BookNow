@@ -18,7 +18,7 @@ export default function Reserve(props) {
   const { user } = useContext(AuthContext);
   const [alert,setAlert]=useState(false);
   const [msg,setMsg]=useState("");
-  const { data, loading, error,reFetch } = useFetch(`/hotels/room/${id}`);
+  const { data, loading, error,reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels/room/${id}`);
    
   let len=data.length;
   ;
@@ -58,7 +58,7 @@ export default function Reserve(props) {
     reFetch();
     try {
        await Promise.all(selectedRooms.map((roomId) => {
-         const res = axios.put(`/rooms/availability/${roomId}`, { dates: allDates })
+         const res = axios.put(`https://booknow-6odc.onrender.com/api/rooms/availability/${roomId}`, { dates: allDates })
         return res.data;
 
        }))

@@ -4,7 +4,7 @@ import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import "./PropertyList.css"
 export default function PropertyList() {
-  const { data, loading, error } = useFetch("/hotels/countByType");
+  const { data, loading, error } = useFetch("https://booknow-6odc.onrender.com/api/hotels/countByType");
   
 
   //We made Images array of object because data[i].count and type is showing undefinde in <h1> && <h2> tags this is because we were using map on two arrays and map accessed only the first array in syntax data && images.map(()=>{})

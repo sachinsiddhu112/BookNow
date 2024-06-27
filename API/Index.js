@@ -28,7 +28,7 @@ mongoose.connection.on("connected",()=>{
 
 //middlewares
 app.use(cors({
-    origin: 'https://book-now-lake.vercel.app/', 
+    origin: '*', 
     credentials: true 
   }));
 app.use(cookieParser());
