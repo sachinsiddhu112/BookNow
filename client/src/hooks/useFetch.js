@@ -10,7 +10,11 @@ const useFetch=(url)=>{
 
         setLoading(true);
         try{
-        const res=await axios.get(url);
+        const res=await axios.get(url,{
+            headers:{
+                'Content-Type':"application/json"
+            }
+        });
         setData(res.data);
          console.log("useFetch",Array.isArray(res.data)?res.data:"Not Array")
          console.log(res);
