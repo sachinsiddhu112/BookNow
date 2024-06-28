@@ -12,7 +12,7 @@ import { SearchContext } from '../../context/SearchContext.js';
 import { AuthContext } from '../../context/AuthContext.js';
 import Reserve from '../../components/reserve/Reserve.jsx';
 import axios from 'axios';
-
+import { LiaRupeeSignSolid } from "react-icons/lia";
 export default function Hotel() {
   const location = useLocation();
 
@@ -222,7 +222,7 @@ console.log(dates)
                     <div className="hotelDetialsPrice">
                       <h2>Perfect for a {days}-night stay!</h2>
                       <span> loacated in the real heart of Krakow , this  property has an excellent loaction score of 9.0</span>
-                      <h2><b>${(days) * data.cheapestPrice * options.room}</b> ({days} nights)</h2>
+                      <h2><b><LiaRupeeSignSolid style={{position:"relative",top:"5px"}}/>{(days) * data.cheapestPrice * options.room}</b> ({days} nights)</h2>
                       <button onClick={handlClick}>Reserve or BookNow!</button>
                     </div>)
                     : (<div className="hotelDetialsPrice">

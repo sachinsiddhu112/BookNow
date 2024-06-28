@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./SearchItem.css";
 import { useNavigate } from 'react-router-dom';
 import Alert from "../alert/Alert.jsx";
-
+import { LiaRupeeSignSolid  } from "react-icons/lia";
 export default function SearchItem({ item, mobileView,dates }) {
   const [noMore, setNoMore] = useState(true);
   const [alert,setAlert]=useState(false);
@@ -60,7 +60,8 @@ export default function SearchItem({ item, mobileView,dates }) {
           <button>{item.rating}</button>
         </div>}
         <div className="siDetailTexts">
-          <span className="siPrice">${item.cheapestPrice}</span>
+          <span className="siPrice"><LiaRupeeSignSolid style={{position:"relative",top:"5px"}}/>
+          {item.cheapestPrice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
           {
         

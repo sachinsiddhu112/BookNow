@@ -74,7 +74,7 @@ export default function Reserve(props) {
   }
 
   const checkoutHandler=async(name,amount)=>{
-    const res=await axios.post("/payment/checkout",{
+    const res=await axios.post("https://booknow-6odc.onrender.com/api/payment/checkout",{
       name,amount
     })
     const order=res.data
@@ -97,7 +97,7 @@ export default function Reserve(props) {
         };
 
         // Send payment details to the backend for verification
-        fetch('/payment/payment-verification', {
+        fetch('https://booknow-6odc.onrender.com/api/payment/payment-verification', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -133,7 +133,9 @@ export default function Reserve(props) {
   }
   return (
     <div className='reserve'>
+    {alert &&
       <Alert alert={alert} setAlert={setAlert} msg={msg} type="danger" />
+      }
       <div className="rContainer">
         <FontAwesomeIcon icon={faCircleXmark} className='rClose' onClick={back} />
         <span>Select your room:</span>
