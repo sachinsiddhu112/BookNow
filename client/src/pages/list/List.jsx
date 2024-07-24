@@ -12,6 +12,9 @@ import { faL } from '@fortawesome/free-solid-svg-icons';
 import { IoCloseSharp } from "react-icons/io5";
 import { SearchContext } from '../../context/SearchContext.js';
 import Alert from '../../components/alert/Alert.jsx';
+import Loading from '../../components/loading/Loading.jsx';
+
+
 export default function List() {
  
   const location = useLocation();
@@ -35,6 +38,7 @@ export default function List() {
 
   //setting search parameters 
   const [destination, setDestination] = useState(location.state ? location.state.destination : "mumbai");
+  const dest=useRef(location.state ? location.state.destination : "mumbai")
   const [dates, setdates] = useState(location.state ? location.state.dates :
     [[{
       startDate: new Date(),
@@ -44,9 +48,10 @@ export default function List() {
   const [options, setOptions] = useState(location.state ? location.state.options : { adult: 1, children: 0, room: 1 });
 
   //fetching data from api
+   
   const { data, loading, error, reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels?city=${destination}&min=${min || 0}&max=${max || 1000000}`)
-
-
+  
+ console.log("listt",data);
   const [mobileView, setMobileView] = useState(false);
 
   useEffect(() => {
@@ -56,6 +61,8 @@ export default function List() {
   }, [])
   
   const handleClick = () => {
+   
+   
     dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } })
     navigate("/hotels", { state: { destination, dates, options } })
     
@@ -123,7 +130,8 @@ export default function List() {
             <div className="lsItem">
               <label >Desitination</label>
               <input type='text' defaultValue={destination}
-                onChange={(e) => setDestination(e.target.value)} />
+                onChange={(e) => {
+                 setDestination(e.target.value)}} />
             </div>
             <div className="lsItem">
               <label >Check-in Date</label>
@@ -193,6 +201,7 @@ export default function List() {
                               return item !== val;
                             })
                             setPType(newPType);
+                           
                           }}>{<IoCloseSharp />}</span>
 
                         </div>
@@ -252,8 +261,10 @@ export default function List() {
           </div>)}
 
           <div className="listResult">
-            {loading ? "loading" :
-              <>{(filterData.current.length > 0 ? 
+            {loading ? <Loading/> :
+              <>
+
+              {destination ? (filterData.current.length > 0 ? 
                 filterData.current.map(item => (
                 <SearchItem item={item} key={item._id} 
                 mobileView={mobileView} dates={dates} />
@@ -264,8 +275,11 @@ export default function List() {
                 mobileView={mobileView} dates={dates} />
 
 
-              )))}
-              </>}
+              ))) : <span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
+
+              </>
+              
+              }
           </div>
         </div>
       </div>

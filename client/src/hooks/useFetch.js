@@ -9,6 +9,7 @@ const useFetch=(url)=>{
     const fetchData= async()=>{
 
         setLoading(true);
+        console.log(loading)
         try{
         const res=await axios.get(url,{
             headers:{

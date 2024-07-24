@@ -13,6 +13,9 @@ import { AuthContext } from '../../context/AuthContext.js';
 import Reserve from '../../components/reserve/Reserve.jsx';
 import axios from 'axios';
 import { LiaRupeeSignSolid } from "react-icons/lia";
+import Loading from '../../components/loading/Loading.jsx';
+
+
 export default function Hotel() {
   const location = useLocation();
 
@@ -166,7 +169,7 @@ console.log(dates)
     <div>
       <Navbar />
       <Header type="list" />
-      {loading ? "loading" : (
+      {loading ? <Loading/> : (
 
         <div className="hotelContainer">
           {!openModal?(
