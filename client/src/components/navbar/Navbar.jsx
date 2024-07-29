@@ -7,9 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 export default function Navbar() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const handleLogin = () => {
-    navigate("/login");
-  }
+  
   
   return (
     <div className='navbar'>
@@ -19,10 +17,10 @@ export default function Navbar() {
           <span className='logo'>BookNow</span>
         </Link>
         {user ? user.username : <div className='navItems'>
-          <button className="navButton" onClick={handleLogin}>
+          <button className="navButton" onClick={() => navigate('/signup')}>
             Register
           </button>
-          <button onClick={handleLogin} className="navButton">Login</button>
+          <button onClick={()=> navigate("/login")} className="navButton">Login</button>
         </div>}
       </div>
     </div>

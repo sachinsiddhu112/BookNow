@@ -7,7 +7,7 @@ import "./List.css";
 import { format } from 'date-fns';
 import SearchItem from '../../components/searchItem/SearchItem.jsx';
 import useFetch from '../../hooks/useFetch';
-import { pt } from 'date-fns/locale';
+import { da, pt } from 'date-fns/locale';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { IoCloseSharp } from "react-icons/io5";
 import { SearchContext } from '../../context/SearchContext.js';
@@ -17,12 +17,12 @@ import Loading from '../../components/loading/Loading.jsx';
 
 export default function List() {
  
-  const location = useLocation();
+ 
   const navigate = useNavigate();
  //some condition checking variables.
   const [openDate, setOpenDate] = useState(false);
-  const [min, setMin] = useState(undefined);
-  const [max, setMax] = useState(undefined);
+  const min=useRef(undefined);
+  const max=useRef(undefined);
   const [typeOpen, setTypeOpen] = useState(false);
 
   
@@ -33,41 +33,57 @@ export default function List() {
   const tvilla = useRef(false);
   const tapartment = useRef(false);
   const tcabin = useRef(false);
-  const filterData = useRef([]);
-  const { dispatch } = useContext(SearchContext);
-
+  const filterData=useRef([]);
+  const { dispatch,dates,city,options} = useContext(SearchContext);
+  
   //setting search parameters 
-  const [destination, setDestination] = useState(location.state ? location.state.destination : "mumbai");
-  const dest=useRef(location.state ? location.state.destination : "mumbai")
-  const [dates, setdates] = useState(location.state ? location.state.dates :
+ // const [destination, setDestination] = useState(location.state ? location.state.destination : "mumbai");
+  const destination=useRef(city ? city : "mumbai")
+  
+  const [inDates,setInDates] = useState(dates? dates :
     [[{
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection'
   }]]);
-  const [options, setOptions] = useState(location.state ? location.state.options : { adult: 1, children: 0, room: 1 });
-
+  const [inOptions,setInOptions] = useState(options ? options : { adult: 1, children: 0, room: 1 });
+ 
   //fetching data from api
    
-  const { data, loading, error, reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels?city=${destination}&min=${min || 0}&max=${max || 1000000}`)
+  const { data, loading, error, reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels?city=${destination.current}&min=${min.current || 0}&max=${max.current || 1000000}`)
   
- console.log("listt",data);
+ 
   const [mobileView, setMobileView] = useState(false);
 
   useEffect(() => {
     window.screen.width < 900 ? setMobileView(true) : setMobileView(false);
-
-
-  }, [])
-  
-  const handleClick = () => {
-   
-   
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } })
-    navigate("/hotels", { state: { destination, dates, options } })
+    dispatch({ type: "NEW_SEARCH", payload: {city:destination.current,dates: inDates, options:inOptions } })
     
-    pType.map((ty, i) => {
+  }, [destination,inOptions,inDates])
+  
+  console.log("destination",destination.current,"city",city)
+  //search functionalty 
+  const handleClick = () => {
+   // dataFilter();
+    dispatch({ type: "NEW_SEARCH", payload: {city:destination.current,dates: inDates, options:inOptions } })
+    navigate("/hotels");
+    
+  }
+  
+ //for opening date modal
+  const settinginDates = () => {
+    if (openDate == false) {
+      setOpenDate(true);
+    }
+    else { 
+      setOpenDate(false);
+    }
+  }
+ //for filtering the data and store in filterData.
+  const dataFilter =()=>{
 
+    pType.map((ty, i) => {
+     
       const newData = data.filter((item, j) => {
         return item.type == ty;
       })
@@ -75,33 +91,19 @@ export default function List() {
         filterData.current = newData;
       } else {
         filterData.current = [...filterData.current, ...newData];
-      }
-
-    })
-
+      }})
+  
     if (pType.length % 5 == 0) {
       filterData.current = data;
     }
+    
+   }
 
-
-    reFetch()
-  }
-
-
-  const settingDates = () => {
-    if (openDate == false) {
-      setOpenDate(true);
-    }
-    else {
-      dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } })
-      navigate("/hotels", { state: { destination, dates, options } })
-      setOpenDate(false);
-    }
-  }
-  //handling the type of room customer looking
+  //setting the typeOpen variable to open type modal.
   const handleType = () => {
     setTypeOpen((prev) => !prev);
   }
+
   //adding new type or removing existing one
   const addType = (e) => {
     const { value, checked } = e.target;
@@ -129,43 +131,43 @@ export default function List() {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label >Desitination</label>
-              <input type='text' defaultValue={destination}
+              <input type='text' defaultValue={destination.current}
                 onChange={(e) => {
-                 setDestination(e.target.value)}} />
+                 destination.current=e.target.value}} />
             </div>
             <div className="lsItem">
               <label >Check-in Date</label>
-              <span onClick={settingDates}>{`${format(dates[0].startDate, "dd/MM/yyyy")} to ${format(dates[0].endDate, "dd/MM/yyyy")}`}</span>
+              <span onClick={settinginDates}>{`${format(inDates[0].startDate, "dd/MM/yyyy")} to ${format(inDates[0].endDate, "dd/MM/yyyy")}`}</span>
 
-              {openDate && (<DateRange onChange={(item) => setdates([item.selection])} minDate={new Date()} ranges={dates} editableDateInputs={true} moveRangeOnFirstSelection={false} />
+              {openDate && (<DateRange onChange={(item) => setInDates([item.selection])} minDate={new Date()} ranges={inDates} editableDateInputs={true} moveRangeOnFirstSelection={true} />
               )}
             </div>
             <div className="lsItem">
               <div className="lsOption">
-                <label >Options</label>
+                <label >options</label>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Min price <small>per night</small></span>
-                  <input type="number" onChange={e => setMin(e.target.value)} className='lsOptionInput' />
+                  <input type="number" onChange={e => min.current=e.target.value} className='lsOptionInput' />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Max price <small>per night</small></span>
-                  <input type="number" onChange={e => setMax(e.target.value)} className='lsOptionInput' />
+                  <input type="number" onChange={e => max.current=e.target.value} className='lsOptionInput' />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
-                  <input type="number" defaultValue={options.adult}
-                    onChange={(e) => setOptions({ adult: e.target.value, children:options.children , room: options.room })}
+                  <input type="number" defaultValue={inOptions.adult}
+                    onChange={(e) => setInOptions({ adult: e.target.value, children:inOptions.children , room: inOptions.room })}
                     className='lsOptionInput' min={1} />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Children</span>
-                  <input type="number" defaultValue={options.children}
-                    onChange={(e) => setOptions({ adult: options.adult, children: e.target.value, room: options.room })} className='lsOptionInput' min={0} />
+                  <input type="number" defaultValue={inOptions.children}
+                    onChange={(e) => setInOptions({ adult: inOptions.adult, children: e.target.value, room: inOptions.room })} className='lsOptionInput' min={0} />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Room</span>
-                  <input type="number" defaultValue={options.room}
-                    onChange={(e) => setOptions({ adult: options.adult, children: e.target.value, room: e.target.value})}
+                  <input type="number" defaultValue={inOptions.room}
+                    onChange={(e) => setInOptions({ adult: inOptions.adult, children: inOptions.children, room: e.target.value})}
                     className='lsOptionInput' min={1} />
                 </div>
                 {typeOpen === false ? (
@@ -264,18 +266,19 @@ export default function List() {
             {loading ? <Loading/> :
               <>
 
-              {destination ? (filterData.current.length > 0 ? 
+              {destination.current ? (filterData.current.length > 0 ? 
                 filterData.current.map(item => (
                 <SearchItem item={item} key={item._id} 
-                mobileView={mobileView} dates={dates} />
+                mobileView={mobileView} dates={inDates} />
 
 
-              )) : data.map(item => (
+              )) :(data.length>0? data.map(item => (
                 <SearchItem item={item} key={item._id} 
-                mobileView={mobileView} dates={dates} />
+                mobileView={mobileView} dates={inDates} />
 
 
-              ))) : <span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
+              )):<span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR PREFERENCE</span>)
+              ) : <span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
 
               </>
               

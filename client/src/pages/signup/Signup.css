@@ -1,0 +1,97 @@
+
+.body{
+    margin: 0; 
+ }
+ 
+ 
+ .register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 95vh;
+    background: linear-gradient(to top left,#63defc,#dbf4f7);
+}
+ .rcontainer{
+     width: 100%;
+     max-width: 37vw;
+     height: 300px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     gap: 8px;
+     box-shadow: 2px 2px 2px 3px #0071c2;
+     border-radius: 10px;
+     
+ }
+ .usernameinput{
+     display: flex;
+     flex-direction: column;
+     
+ }
+ .passinput{
+     display: flex;
+     flex-direction: column;
+     
+ }
+ .emailinput{
+     display: flex;
+    flex-direction: column;
+ }
+ .lInput{
+   
+     width: 100%;
+     max-width: 200px;
+     border-radius: 10px;
+     border: 1px dashed;
+     padding: 4px;
+ }
+ .button{
+    width: 100%;
+    max-width: 180px;
+    font-size: 20px;
+    border-radius: 15px;
+    height: 40px;
+    border: none;
+    background: #0071c2;
+    margin-top: 10px;
+    cursor: pointer;
+    }
+ .errcontainer{
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(58, 58, 58);
+ }
+ .error{
+     background:linear-gradient(to bottom,rgb(232, 139, 139),transparent);
+     display: flex;
+     width: 100%;
+     max-width: 900px;
+     height: 80px;
+     margin: auto;
+     transform: translateY(40vh);
+     border-radius: 15px;
+     justify-content: center;
+     box-shadow: 4px 4px 5px red;
+ }
+ .cancelBtn{
+     position: absolute;
+     top: 5px;
+     right: 5px;
+     cursor: pointer;
+ }
+ 
+ 
+ @media screen and (max-width:750px){
+     .usernameinput{
+         display: flex;
+         flex-direction: column;
+     }
+     .passinput{
+         display: flex;
+         flex-direction: column;
+     }
+ }

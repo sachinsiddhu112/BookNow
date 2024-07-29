@@ -75,6 +75,7 @@ margin: 20px 0px ;
 .headerSearchInput{
 border: none;
 outline: none;
+font-size: 20px;
 }
 
 .headerSearchText{

@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./SearchItem.css";
 import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 import Alert from "../alert/Alert.jsx";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 export default function SearchItem({ item, mobileView, dates }) {
   const [noMore, setNoMore] = useState(true);
   const [alert, setAlert] = useState(false);
+
   const navigate = useNavigate();
 
   const next = () => {
-    console.log(dates);
-    const date1=new Date();
-    if (dates[0].startDate.getTime() != dates[0].endDate.getTime()) {
+    const startDate = new Date(dates[0].startDate);
+    const endDate = new Date(dates[0].endDate);
+    if (startDate.getTime() != endDate.getTime()) {
       navigate(`/hotels/${item._id}`);
     }
     else {

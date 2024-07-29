@@ -16,12 +16,14 @@ export default function Reserve(props) {
   const location = useLocation();
   const id = props.hotelId
   const { user } = useContext(AuthContext);
+  
   const [alert,setAlert]=useState(false);
   const [msg,setMsg]=useState("");
+ 
   const { data, loading, error,reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels/room/${id}`);
    
   let len=data.length;
-  ;
+  
 
 
   const { dates ,options} = useContext(SearchContext);
@@ -46,24 +48,41 @@ export default function Reserve(props) {
   }
 
   const [selectedRooms, setSelectedRooms] = useState([]);
+
   const handleSelect = (e) => {
     const checked = e.target.checked;
     const value = e.target.value;
+  
+    
     setSelectedRooms(checked ? [...selectedRooms, value] : selectedRooms.filter(item => item !== value));
-
+   
   }
 
 
   const handleClick = async () => {
     reFetch();
     try {
+      if(selectedRooms.length == options.room){
+
+      
        await Promise.all(selectedRooms.map((roomId) => {
          const res = axios.put(`https://booknow-6odc.onrender.com/api/rooms/availability/${roomId}`, { dates: allDates })
         return res.data;
 
        }))
+
       checkoutHandler(props.data.title,props.days * options.room *props.data.cheapestPrice);;
-      
+      }
+      else{
+        setAlert(true);
+         if(selectedRooms.length > options.room){
+          setMsg(`You have selected ${selectedRooms.length-options.room} extra`)
+         }
+         else{
+            setMsg(`You have selected ${options.room-selectedRooms.length} less rooms`)
+         }
+
+      }
     } catch (err) {
 
     }
@@ -133,10 +152,11 @@ export default function Reserve(props) {
   }
   return (
     <div className='reserve'>
-    {alert &&
-      <Alert alert={alert} setAlert={setAlert} msg={msg} type="danger" />
-      }
+    
       <div className="rContainer">
+      {alert &&
+      <Alert alert={alert} setAlert={setAlert} msg={msg} type="warning" />
+      }
         <FontAwesomeIcon icon={faCircleXmark} className='rClose' onClick={back} />
         <span>Select your room:</span>
           <div className="rItem" >
@@ -149,7 +169,7 @@ export default function Reserve(props) {
               {data[len-1]?(data[len-1].roomNumbers.map((roomNumber, i) => (
                 <div className="room" key={i}>
                   <label > {roomNumber.number}</label>
-                  <input type="checkbox" value={roomNumber._id} onChange={handleSelect} disabled={!isAvailabel(roomNumber)} />
+                  <input type="checkbox" value={roomNumber._id} onChange={handleSelect} disabled={!isAvailabel(roomNumber) } />
                 </div>
 
               ))):"Not available any room"
