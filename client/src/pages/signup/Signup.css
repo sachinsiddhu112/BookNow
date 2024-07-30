@@ -12,6 +12,7 @@
     width: 100%;
     height: 95vh;
     background: linear-gradient(to top left,#63defc,#dbf4f7);
+    
 }
  .rcontainer{
      width: 100%;
@@ -85,13 +86,11 @@
  }
  
  
- @media screen and (max-width:750px){
-     .usernameinput{
-         display: flex;
-         flex-direction: column;
-     }
-     .passinput{
-         display: flex;
-         flex-direction: column;
-     }
- }
+ @media screen and (max-width:600px){
+    .rcontainer{
+        box-shadow: none;
+    }
+    .register{
+        height: 100vh;
+    }
+}

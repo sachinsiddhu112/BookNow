@@ -82,13 +82,11 @@ cursor: pointer;
 }
 
 
-@media screen and (max-width:750px){
-    .usernameinput{
-        display: flex;
-        flex-direction: column;
+@media screen and (max-width:600px){
+    .lcontainer{
+        box-shadow: none;
     }
-    .passinput{
-        display: flex;
-        flex-direction: column;
+    .login{
+        height: 100vh;
     }
 }
