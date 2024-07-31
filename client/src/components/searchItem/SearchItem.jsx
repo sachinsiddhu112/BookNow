@@ -22,7 +22,7 @@ export default function SearchItem({ item, mobileView, dates }) {
   }
   return (
     <div className="container">
-      {alert && <div>
+       {alert && !mobileView && <div>
         <Alert alert={alert} setAlert={setAlert} type="warning" msg="Please select dates before selecting the hotel." />
       </div>
       }
@@ -32,6 +32,10 @@ export default function SearchItem({ item, mobileView, dates }) {
           alt=""
           className="siImg"
         />
+        {alert && mobileView && <div>
+        <Alert alert={alert} setAlert={setAlert} type="warning" msg="Please select dates before selecting the hotel." />
+      </div>
+      }
         <div className="siDesc">
           <h1 className="siTitle">{item.name}</h1>
 

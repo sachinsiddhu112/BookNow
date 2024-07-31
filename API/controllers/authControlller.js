@@ -19,7 +19,7 @@ export const register = async (req, res, next) => {
         res.status(200).json(usr);
     }
     catch (err) {
-        err.message="Duplicate Values,Please use unique username and email";
+        err.message="Please use unique username and email";
         next(err);
     }
 }

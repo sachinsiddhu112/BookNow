@@ -43,7 +43,7 @@ export default function Login() {
     }
     catch (err) {
       setAlert(true);
-      setMsg("USER NOT FOUND");
+      setMsg(err.response.data.message);
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data })
     }
   }
@@ -52,8 +52,9 @@ export default function Login() {
   return (
 
     <div className='login'>
+      {alert && <Alert setAlert={setAlert} msg={msg} type="warning" />}
       <div className="lcontainer">
-        {alert && <Alert setAlert={setAlert} msg={msg} type="warning" />}
+        
         <div className='usernameinput'>
           <label htmlFor="username" className='inputLabel' > Username</label>
           <input type="text" placeholder='username' id="username" onChange={handleChange} className='lInput' />

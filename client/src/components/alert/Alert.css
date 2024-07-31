@@ -1,9 +1,8 @@
 .alert-container{
     display: flex;
     flex-direction: row;
-   
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     padding: 10px 10px;
    margin-bottom: 5px;
    justify-content: space-between;
@@ -15,7 +14,7 @@
 }
 .alert{
 display: flex;
-gap: 10px;
+gap: 5px;
 font-size: large;
 }
 .btn{
@@ -28,9 +27,8 @@ font-size: large;
     border-radius: 45%;
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:600px) {
     .alert-container{
-        position: relative;
-        top: 60vh;
+        width: 90%;
     }
 }

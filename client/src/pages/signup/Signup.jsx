@@ -51,15 +51,19 @@ export default function Signup() {
     }
     catch (err) {
        setAlert(true);
-       setMsg("USER NOT FOUND")
+       setMsg(err.response.data.message)
+       console.log(err.response.data.message)
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data })
     }
   }
   return (
 
     <div className='register'>
-      <div className="rcontainer">
+      <div>
        { alert &&  <Alert alert={alert} setAlert={setAlert} type="warning" msg={msg} />}
+      </div>
+      <div className="rcontainer">
+      
         <div className='usernameinput'>
           <label htmlFor="username"> Username</label>
           <input type="text" placeholder='username' id="username" onChange={handleChange} className='lInput' />
