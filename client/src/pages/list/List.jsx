@@ -61,10 +61,10 @@ export default function List() {
     
   }, [destination,inOptions,inDates])
   
-  console.log("destination",destination.current,"city",city)
+  
   //search functionalty 
   const handleClick = () => {
-   // dataFilter();
+    dataFilter();
     dispatch({ type: "NEW_SEARCH", payload: {city:destination.current,dates: inDates, options:inOptions } })
     navigate("/hotels");
     
