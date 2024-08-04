@@ -9,6 +9,7 @@
     width: 100%;
     border-radius: 5px;
     display: flex;
+    margin-right: 15px;
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 20px;
@@ -113,9 +114,16 @@
     cursor: pointer;
     border-radius: 5px;
   }
-
-  @media screen and (max-width:650px){
+ 
+  @media screen and (max-width:860px){
     .searchItem{
+
       flex-direction: column;
+      transform: translateX(0px);
+      transition: transform 2s ease-in-out;
+    }
+   
+    .siImg{
+      width: 99%;
     }
   }

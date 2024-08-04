@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import Alert from "../alert/Alert.jsx";
 import { LiaRupeeSignSolid } from "react-icons/lia";
-export default function SearchItem({ item, mobileView, dates }) {
+export default function SearchItem({ item, mobileView, dates,openFilter }) {
   const [noMore, setNoMore] = useState(true);
   const [alert, setAlert] = useState(false);
 
@@ -26,7 +26,7 @@ export default function SearchItem({ item, mobileView, dates }) {
         <Alert alert={alert} setAlert={setAlert} type="warning" msg="Please select dates before selecting the hotel." />
       </div>
       }
-      <div className='searchItem'>
+      <div className={`searchItem `}>
         <img
           src={item.photos[0] ? item.photos[0] : "https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"}
           alt=""
@@ -72,7 +72,7 @@ export default function SearchItem({ item, mobileView, dates }) {
             <span className="siTaxOp">Includes taxes and fees</span>
             {
 
-              <button className="siCheckButton" onClick={next}>See availability</button>
+              <button className="siCheckButton" onClick={next}>CheckOut</button>
             }
           </div>
         </div>

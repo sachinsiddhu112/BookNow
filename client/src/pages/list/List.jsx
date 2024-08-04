@@ -10,22 +10,28 @@ import useFetch from '../../hooks/useFetch';
 import { da, pt } from 'date-fns/locale';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { IoCloseSharp } from "react-icons/io5";
+import { MdOutlineClose } from "react-icons/md";
+
 import { SearchContext } from '../../context/SearchContext.js';
 import Alert from '../../components/alert/Alert.jsx';
 import Loading from '../../components/loading/Loading.jsx';
 
 
 export default function List() {
- 
- 
-  const navigate = useNavigate();
- //some condition checking variables.
-  const [openDate, setOpenDate] = useState(false);
-  const min=useRef(undefined);
-  const max=useRef(undefined);
-  const [typeOpen, setTypeOpen] = useState(false);
 
-  
+
+  const navigate = useNavigate();
+  //some condition checking variables.
+  const [openDate, setOpenDate] = useState(false);
+  const min = useRef(undefined);
+  const max = useRef(undefined);
+  const [typeOpen, setTypeOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
+  const [priceFilter, setPriceFilter] = useState(false);
+
+
+
+
   //handling the type of service customer wants.
   const [pType, setPType] = useState([]);
   const thotel = useRef(false);
@@ -33,71 +39,66 @@ export default function List() {
   const tvilla = useRef(false);
   const tapartment = useRef(false);
   const tcabin = useRef(false);
-  const filterData=useRef([]);
-  const { dispatch,dates,city,options} = useContext(SearchContext);
-  
+  const [filterData,setFilterData] = useState([]);
+  const { dispatch, dates, city, options } = useContext(SearchContext);
+
   //setting search parameters 
- // const [destination, setDestination] = useState(location.state ? location.state.destination : "mumbai");
-  const destination=useRef(city ? city : "mumbai")
-  
-  const [inDates,setInDates] = useState(dates? dates :
+  // const [destination, setDestination] = useState(location.state ? location.state.destination : "mumbai");
+  const destination = useRef(city ? city : "mumbai")
+
+  const [inDates, setInDates] = useState(dates ? dates :
     [[{
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection'
-  }]]);
-  const [inOptions,setInOptions] = useState(options ? options : { adult: 1, children: 0, room: 1 });
- 
+    }]]);
+  const [inOptions, setInOptions] = useState(options ? options : { adult: 1, children: 0, room: 1 });
+
   //fetching data from api
-   
+
   const { data, loading, error, reFetch } = useFetch(`https://booknow-6odc.onrender.com/api/hotels?city=${destination.current}&min=${min.current || 0}&max=${max.current || 1000000}`)
-  
- 
+
+
   const [mobileView, setMobileView] = useState(false);
 
   useEffect(() => {
-    window.screen.width < 900 ? setMobileView(true) : setMobileView(false);
-    dispatch({ type: "NEW_SEARCH", payload: {city:destination.current,dates: inDates, options:inOptions } })
-    
-  }, [destination,inOptions,inDates])
-  
-  
+    window.screen.width < 750 ? setMobileView(true) : setMobileView(false);
+    dispatch({ type: "NEW_SEARCH", payload: { city: destination.current, dates: inDates, options: inOptions } })
+    dataFilter()
+    console.log("handleClick",data)
+  }, [destination.current, inOptions, inDates, window.screen.width,data])
+
+
   //search functionalty 
   const handleClick = () => {
-    dataFilter();
-    dispatch({ type: "NEW_SEARCH", payload: {city:destination.current,dates: inDates, options:inOptions } })
-    navigate("/hotels");
+    
+    setOpenFilter(false);
+    dispatch({ type: "NEW_SEARCH", payload: { city: destination.current, dates: inDates, options: inOptions } })
+    dataFilter()
+    
     
   }
-  
- //for opening date modal
+
+  //for opening date modal
   const settinginDates = () => {
     if (openDate == false) {
       setOpenDate(true);
     }
-    else { 
+    else {
       setOpenDate(false);
     }
   }
- //for filtering the data and store in filterData.
-  const dataFilter =()=>{
-
-    pType.map((ty, i) => {
-     
-      const newData = data.filter((item, j) => {
-        return item.type == ty;
-      })
-      if (i == 0 && newData.length > 0) {
-        filterData.current = newData;
-      } else {
-        filterData.current = [...filterData.current, ...newData];
-      }})
+  //for filtering the data and store in filterData.
+  const dataFilter = () => {
+   
+    const filteredData = pType.flatMap(ty => data.filter(item => item.type === ty));
   
-    if (pType.length % 5 == 0) {
-      filterData.current = data;
-    }
-    
-   }
+  if (pType.length % 5 === 0) {
+    setFilterData(data);
+  } else {
+    setFilterData(filteredData);
+  }
+  }
 
   //setting the typeOpen variable to open type modal.
   const handleType = () => {
@@ -121,19 +122,25 @@ export default function List() {
 
 
 
+ 
+  
   return (
     <div>
-      <Navbar />
-      <Header type="list" />
+      
+        <> <Navbar />
+          <Header type="list" />
+        </>
+
       <div className="listContainer">
         <div className="listWrapper">
-          {mobileView ? "" : (<div className="listSearch">
+          <div className={`listSearch ${openFilter?"showSearchList":""}`}>
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label >Desitination</label>
               <input type='text' defaultValue={destination.current}
                 onChange={(e) => {
-                 destination.current=e.target.value}} />
+                  destination.current = e.target.value
+                }} />
             </div>
             <div className="lsItem">
               <label >Check-in Date</label>
@@ -147,16 +154,16 @@ export default function List() {
                 <label >options</label>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Min price <small>per night</small></span>
-                  <input type="number" onChange={e => min.current=e.target.value} className='lsOptionInput' />
+                  <input type="number" onChange={e => min.current = e.target.value} className='lsOptionInput' />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Max price <small>per night</small></span>
-                  <input type="number" onChange={e => max.current=e.target.value} className='lsOptionInput' />
+                  <input type="number" onChange={e => max.current = e.target.value} className='lsOptionInput' />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Adult</span>
                   <input type="number" defaultValue={inOptions.adult}
-                    onChange={(e) => setInOptions({ adult: e.target.value, children:inOptions.children , room: inOptions.room })}
+                    onChange={(e) => setInOptions({ adult: e.target.value, children: inOptions.children, room: inOptions.room })}
                     className='lsOptionInput' min={1} />
                 </div>
                 <div className="lsOptionItem">
@@ -167,7 +174,7 @@ export default function List() {
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Room</span>
                   <input type="number" defaultValue={inOptions.room}
-                    onChange={(e) => setInOptions({ adult: inOptions.adult, children: inOptions.children, room: e.target.value})}
+                    onChange={(e) => setInOptions({ adult: inOptions.adult, children: inOptions.children, room: e.target.value })}
                     className='lsOptionInput' min={1} />
                 </div>
                 {typeOpen === false ? (
@@ -178,7 +185,7 @@ export default function List() {
                       <button className='pTypeBtn' onClick={handleType} >{pType.length % 5 == 0 ? "all" : "applied"}</button>
                     </div>
                     <div className='pTypeList'>
-                      {pType.map((item, i) => (
+                      { !mobileView && (pType.map((item, i) => (
                         <div className='pTypeItem' key={i}>
                           <button className=''>{item}</button>
                           <span className='pTypeItemRemove' value={item} onClick={() => {
@@ -203,11 +210,11 @@ export default function List() {
                               return item !== val;
                             })
                             setPType(newPType);
-                           
+
                           }}>{<IoCloseSharp />}</span>
 
                         </div>
-                      ))
+                      )))
                       }
                     </div>
 
@@ -259,30 +266,48 @@ export default function List() {
                 )}
               </div>
             </div>
-            <button onClick={handleClick}>Search</button>
-          </div>)}
-
-          <div className="listResult">
-            {loading ? <Loading/> :
+            <button onClick={handleClick}>{openFilter?(<>Apply</>):(<>Search</>)}</button>
+          </div>
+          <div className={`listResult ${openFilter ? "toggleListResult":""}`}>
+            {loading ? <Loading /> :
               <>
+                {destination.current ? (
+                  <>
+                   
+                      <>
+                        {filterData.length > 0 && pType.length>0 && pType.length<5 ?
+                          <>
+                            { mobileView && <span className='filterText' onClick={() => setOpenFilter(true)}>Filter</span>}
 
-              {destination.current ? (filterData.current.length > 0 ? 
-                filterData.current.map(item => (
-                <SearchItem item={item} key={item._id} 
-                mobileView={mobileView} dates={inDates} />
+                            {filterData.map(item => (
+                              <SearchItem item={item} key={item._id}
+                                mobileView={mobileView} dates={inDates} openFilter={openFilter} />
 
 
-              )) :(data.length>0? data.map(item => (
-                <SearchItem item={item} key={item._id} 
-                mobileView={mobileView} dates={inDates} />
+                            ))}
+                          </>
+                          : (data.length > 0 ?
+                            <>
+                            { mobileView &&  <span className='filterText' onClick={() => setOpenFilter(true)}>Filter</span>}
+                              {data.map(item => (
+                                <SearchItem item={item} key={item._id}
+                                  mobileView={mobileView} dates={inDates} />
 
 
-              )):<span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR PREFERENCE</span>)
-              ) : <span style={{marginLeft:"20%"}} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
+                              ))}
+                            </>
+                            : <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR PREFERENCE</span>)
+                        }
+                      </>
+                    
 
+                  </>
+                ) : <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
               </>
-              
-              }
+
+            }
+
+
           </div>
         </div>
       </div>

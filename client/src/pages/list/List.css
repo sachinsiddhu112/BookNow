@@ -1,51 +1,62 @@
-.listContainer{
+.listContainer {
     display: flex;
     justify-content: center;
     margin-top: 20px;
     width: 100%;
-   
+
 }
-.listWrapper{
+
+.listWrapper {
     width: 100%;
     max-width: 1400px;
     display: flex;
     gap: 20px;
+    
 }
-.listSearch{
-    flex: 1;;
+
+.listSearch {
+   
     background-color: #febb02;
+    width: 100%;
+    max-width: 300px;
     padding: 10px;
+    
     margin-bottom: 10px;
     border-radius: 12px;
     position: sticky;
     top: 10px;
     height: max-content;
+    margin-left: 0px;
 }
-.lsTitle{
+
+.lsTitle {
     font-size: 20px;
     color: #555;
     margin-bottom: 10px;
-   
+
 }
-.lsItem{
+
+.lsItem {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-bottom: 10px;
 }
-.lsItem>label{
+
+.lsItem>label {
     font-size: 12px;
 }
 
-.lsItem>input{
-height: 30px;
-border: none;
-padding: 4px;
-border-radius: 7px;
-font-size: 20px;
+.lsItem>input {
+    height: 30px;
+    border: none;
+    padding: 4px;
+    border-radius: 7px;
+    font-size: 20px;
 
 }
-.lsItem>span{
+
+.lsItem>span {
     height: 30px;
     padding: 4px;
     background-color: white;
@@ -54,15 +65,17 @@ font-size: 20px;
     align-items: center;
     border-radius: 7px;
 }
-.lsOption{
+
+.lsOption {
     padding: 10px;
 }
-.lsOptionItemPType{
+
+.lsOptionItemPType {
     display: flex;
     flex-direction: column;
 }
 
-.lsOptionItem{
+.lsOptionItem {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
@@ -72,7 +85,7 @@ font-size: 20px;
     font: bold;
 }
 
-.lsOptionInput{
+.lsOptionInput {
     width: 70px;
     font-size: 20px;
     cursor: pointer;
@@ -80,37 +93,42 @@ font-size: 20px;
     border: 1px dashed;
 }
 
-.pTypeBtn{
+.pTypeBtn {
     width: 80px;
     height: 30px;
     font-size: 20px;
     cursor: pointer;
     border: 1px dashed;
-    border-radius: 8px ;
+    border-radius: 8px;
 }
-.pTypeList{
-    display:grid;
+
+.pTypeList {
+    display: grid;
     grid-template-columns: 100px 100px 100px;
-   
-   
+
+
 
 }
-.pTypeItem{
+
+.pTypeItem {
     display: flex;
     flex-direction: row;
-   width: fit-content;
+    width: fit-content;
     border: 2px solid rgb(64, 171, 217);
-    border-radius: 8px ;
+    border-radius: 8px;
     margin: 2px 2px;
     cursor: pointer;
 }
-.pTypeItemRemove{
+
+.pTypeItemRemove {
     cursor: pointer;
 }
-.pTypeItemRemove:hover{
+
+.pTypeItemRemove:hover {
     scale: 1.1;
 }
-.listSearch>button{
+
+.listSearch>button {
     padding: 10px;
     background-color: #0071c2;
     color: white;
@@ -120,14 +138,20 @@ font-size: 20px;
     cursor: pointer;
     border-radius: 7px;
 }
-.listSearch>button:hover{
+
+.listSearch>button:hover {
     transform: scale(1.01);
 }
 
 
-.listResult{flex: 3;
+.listResult {
+   
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
 }
-.tlist{
+
+.tlist {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -141,12 +165,64 @@ font-size: 20px;
     border-radius: 8px;
     padding: 5px 5px;
 }
-.titem{
+
+.titem {
     display: flex;
-   
+
     justify-content: space-between;
 
 }
-.iteminput{
+
+.iteminput {
     width: 20px;
+}
+
+.filterText{
+    border: 1px orange solid;
+    border-radius: 5px;
+    padding: 5px 5px;
+    margin-bottom: 5px;
+    width: fit-content;
+}
+
+@media screen and (max-width:600px){
+   .listWrapper{
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    
+   }
+   .listSearch{
+    background-color: #febb02;
+    width: 0%;
+    height: fit-content;
+    padding: 10px;
+    margin-bottom: 10px;
+    
+    border-radius: 12px;
+    position: relative;
+    left: -50vw;
+    transition: transform 2s ease-in-out,width 2s ease-in-out;
+   }
+  
+ .showSearchList{
+   
+    width: 95vw;
+   transform: translateX(55vw);
+   }
+   .listResult {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    left: 0px;
+    margin-right: 13px;
+    transition: transform 2s ease-in-out ;
+}
+.toggleListResult{
+    transform: translateX(600px);
+   
+}
+  
 }
