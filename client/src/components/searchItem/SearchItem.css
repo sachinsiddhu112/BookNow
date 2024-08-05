@@ -117,10 +117,9 @@
  
   @media screen and (max-width:860px){
     .searchItem{
-
-      flex-direction: column;
-      transform: translateX(0px);
-      transition: transform 2s ease-in-out;
+     flex-direction: column;
+     padding: 5px 5px;
+     
     }
    
     .siImg{

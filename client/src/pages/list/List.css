@@ -190,6 +190,7 @@
     width: 100%;
     max-width: 1400px;
     display: flex;
+    gap: 0;
     
    }
    .listSearch{
@@ -202,26 +203,27 @@
     border-radius: 12px;
     position: relative;
     left: -50vw;
-    transition: transform 2s ease-in-out,width 2s ease-in-out;
+    transition: transform 1.5s ease-in-out,width 1.5s ease-in-out;
+    overflow: hidden;
    }
   
  .showSearchList{
    
-    width: 95vw;
+    width: 100%;
    transform: translateX(55vw);
    }
    .listResult {
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
     width: 100%;
     position: relative;
     left: 0px;
-    margin-right: 13px;
-    transition: transform 2s ease-in-out ;
+    transition: transform 1.5s ease-in-out,width 1.5s ease-in-out ;
+    
+   
 }
 .toggleListResult{
+    width: 0%;
     transform: translateX(600px);
+    overflow: hidden;
    
 }
   

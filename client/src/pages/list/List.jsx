@@ -139,7 +139,7 @@ export default function List() {
               <label >Desitination</label>
               <input type='text' defaultValue={destination.current}
                 onChange={(e) => {
-                  destination.current = e.target.value
+                  destination.current = e.target.value.toLowerCase()
                 }} />
             </div>
             <div className="lsItem">
@@ -296,13 +296,23 @@ export default function List() {
 
                               ))}
                             </>
-                            : <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR PREFERENCE</span>)
+                            : 
+                            <>
+                            { mobileView &&  <span className='filterText' onClick={() => setOpenFilter(true)}>Back</span>}
+                            <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR PREFERENCE</span>
+                            </>
+                            )
                         }
                       </>
                     
 
                   </>
-                ) : <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>}
+                ) : 
+                <>
+                 { mobileView  &&  <span className='filterText' onClick={() => setOpenFilter(true)}>Back</span>}
+                <span style={{ marginLeft: "20%" }} >NO ITEM TO SHOW,CHECK YOUR DESTINATION</span>
+                </>
+                }
               </>
 
             }
