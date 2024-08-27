@@ -50,16 +50,8 @@ FEATURES:
         Login:Login page.
         Signup:Signup page.
     Components:
-        Alert:
-        Featured
-        FeaturedProperties
-        Footer
-        Header
-        Loading
-        MailList
-        Navbar
-        Register
-        SearchItem
+        Alert,Featured, FeaturedProperties, Footer, Header, Loading, MailList,
+         Navbar, Register, SearchItem
     Context:AuthContext:Context api to handled data related to user authentication.
         SearchContext:This context handle data with search performed by user.
     Custom Hooks:useFetch:Basic general function to fetch data from provided url.
